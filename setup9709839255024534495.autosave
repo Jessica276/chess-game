@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 Game game = new Game();
 Player p1 = new HumanPlayer(true);
 Player p2 = new HumanPlayer(false);
@@ -14,6 +16,7 @@ void draw(){
   displayBoard();
   if(game.isEnd()){
     showGameOver();
+    
   }
 }
 
@@ -116,3 +119,22 @@ void showGameOver(){
   game.initialize(p1, p2);  // Reinitialise la partie
   possibleMoves.clear();
 }
+
+/*void showGameOverMessage(){
+  GameStatus status = game.getStatus();
+  String message = "";
+  if(status == GameStatus.WHITE_WIN){
+    message = "White wins!";
+  }
+  else if (status == GameStatus.BLACK_WIN){
+    message = "Black wins!";
+  }
+  else if (status == GameStatus.RESIGNATION){
+    message = "The game is a draw!";
+  }
+
+  JOptionPane.showMessageDialog(null, message);
+  game.initialize(p1, p2);  // Reinitialise la partie
+  firstClick = true;
+  possibleMoves.clear();
+}*/

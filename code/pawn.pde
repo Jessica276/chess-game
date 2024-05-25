@@ -32,6 +32,12 @@ class Pawn extends Piece{
           
           return false;
         }
+        //Si le pion se trouve à la dernière case ascendante(desc) on peut changer de pièce à part changer en roi
+        else if(startX == (isWhite() ? 0 : 7)){
+          
+          
+          return true;
+        }
         else{
           if(endX == startX + direction && endY == startY && end.getPiece() == null){
             return true;

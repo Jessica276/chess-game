@@ -1,18 +1,25 @@
 Game game = new Game();
 Player p1 = new HumanPlayer(true);
 Player p2 = new HumanPlayer(false);
+boolean showGameOverMessage = false;
 boolean firstClick = true;
 int startX, startY, endX, endY;
 ArrayList<int[]> possibleMoves = new ArrayList<>();
+PImage gameOverImage;
+PImage cassure;
 
 void setup() {
   size(800, 800);
   game.initialize(p1, p2);
+  cassure = loadImage("../piece_img/cassure.png");
+  cassure.resize(width,height);
+  gameOverImage = loadImage("../piece_img/checkmate.png");
+  gameOverImage.resize(400,200);
 }
 
 void draw(){
   displayBoard();
-  if(game.isEnd()){
+  if(!game.isEnd()){
     showGameOver();
   }
 }
@@ -51,10 +58,21 @@ void displayBoard(){
     rect(startY * extent, startX * extent, extent, extent);
     strokeWeight(1);
   }
+  
+  if(showGameOverMessage){
+    showGameOver();
+  }
 }
 
 void mousePressed(){
-  if (game.isEnd()) {
+  if(showGameOverMessage){
+    showGameOverMessage = false;
+    game.initialize(p1, p2);
+    possibleMoves.clear();
+    return;
+  }
+  
+  if(game.isEnd()){
     return;
   }
   
@@ -105,14 +123,15 @@ ArrayList<int[]> getPossibleMoves(Piece piece, int x, int y){
 }
 
 void showGameOver(){
-  fill(255, 0, 0);
+  displayBoard();
+  background(cassure);
+  image(gameOverImage,width/2-gameOverImage.width/2,height/2-gameOverImage.height/2-50);
+
+  fill(#31363F);
   textSize(70);
   textAlign(CENTER, CENTER);
-  text("Echec et Mat", width / 2, height / 2 - 40);
+  text("Checkmate", width / 2, height / 2 - 40);
+  textSize(100);
   
-  textSize(30);
-  text("Cliquez pour rejouer", width / 2, height / 2 + 40);
-  
-  game.initialize(p1, p2);  // Reinitialise la partie
-  possibleMoves.clear();
+  showGameOverMessage = true;
 }

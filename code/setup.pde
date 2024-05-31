@@ -19,7 +19,7 @@ void setup() {
 
 void draw(){
   displayBoard();
-  if(!game.isEnd()){
+  if(game.isEnd()){
     showGameOver();
   }
 }
